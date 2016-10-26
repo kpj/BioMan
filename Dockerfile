@@ -1,6 +1,12 @@
 ## Dockerfile for tool-manager
 FROM node
 
+# install docker
+RUN apt-get update && apt-get install -y apt-transport-https
+RUN echo "deb https://apt.dockerproject.org/repo debian-jessie main" >> /etc/apt/sources.list
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+RUN apt-get update && apt-get install -y docker-engine
+
 # prepare environment
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
