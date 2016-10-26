@@ -1,5 +1,19 @@
 import React from 'react'
 
+class Image extends React.Component {
+  render () {
+    return (
+      <li onClick={this.onClick.bind(this)}>{this.props.name}</li>
+    )
+  }
+
+  onClick () {
+    fetch('/api/run/' + this.props.name.replace(/\//g, '__'), {method: 'POST'})
+    .then(res => res.json())
+    .then(json => console.log(json))
+  }
+}
+
 class Registry extends React.Component {
   constructor() {
     super()
@@ -16,7 +30,7 @@ class Registry extends React.Component {
         <h2>Image Registry</h2>
         <ul>
           {this.state.images.map(img => {
-            return <li>{img}</li>
+            return <Image name={img}/>
           })}
         </ul>
       </div>

@@ -20,6 +20,12 @@ $ docker run -d -p 5000:5000 --restart=always --name registry registry
 $ ./registry/build_images.sh
 ```
 
+Finally, a network must be setup:
+
+```bash
+$ docker network create --driver overlay swarm_network
+```
+
 ## Usage
 
 Build the server image with

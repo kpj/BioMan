@@ -17,4 +17,23 @@ api.get('/registry', (req, res) => {
   .then(buffer => res.json({data: JSON.parse(buffer.toString())}))
 })
 
+api.post('/run/:image', (req, res) => {
+  // TODO: make this dirty hack unnecessary
+  let img = req.params.image.replace(/__/g, '/')
+  console.log('Running', img)
+
+  let name = 'bestserviceever'
+  let cmd = []
+
+  spawn('docker', [
+    'service', 'create',
+    '--replicas', 1,
+    '--name', name,
+    '--network', 'swarm_network',
+    '--with-registry-auth',
+    img, ...cmd])
+  .then(buffer => res.json('service submitted'))
+  .catch(reason => console.log(reason))
+})
+
 module.exports = api
