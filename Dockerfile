@@ -1,5 +1,6 @@
 ## Dockerfile for tool-manager
 FROM node
+MAINTAINER kpj <kpjkpjkpjkpjkpjkpj@gmail.com>
 
 # install docker
 RUN apt-get update && apt-get install -y apt-transport-https

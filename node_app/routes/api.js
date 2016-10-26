@@ -12,4 +12,9 @@ api.get('/nodes', (req, res) => {
   .catch(reason => console.log(reason))
 })
 
+api.get('/registry', (req, res) => {
+  spawn('curl', ['-s', 'http://localhost:5000/v2/_catalog'])
+  .then(buffer => res.json({data: JSON.parse(buffer.toString())}))
+})
+
 module.exports = api
