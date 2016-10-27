@@ -12,7 +12,7 @@ app.use(webpackDevMiddleware(compiler, {
   stats: {colors: true}
 }))
 
-app.use(webpackHotMiddleware(compiler, { log: console.log }))
+app.use(webpackHotMiddleware(compiler, {log: console.log}))
 
 let api = require('./routes/api')
 app.use('/api', api)
