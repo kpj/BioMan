@@ -22,14 +22,13 @@ api.post('/run/:image', (req, res) => {
   let img = req.params.image.replace(/__/g, '/')
   console.log('Running', img)
 
-  let name = 'bestserviceever'
   let cmd = []
 
   spawn('docker', [
     'service', 'create',
     '--replicas', 1,
-    '--name', name,
     '--network', 'swarm_network',
+    '--restart-condition', 'none',
     '--with-registry-auth',
     img, ...cmd])
   .then(buffer => res.json('service submitted'))
