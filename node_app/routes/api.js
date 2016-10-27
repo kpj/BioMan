@@ -17,12 +17,12 @@ api.get('/registry', (req, res) => {
   .then(buffer => res.json({data: JSON.parse(buffer.toString())}))
 })
 
-api.post('/run/:image', (req, res) => {
+api.post('/run/:image/:command', (req, res) => {
   // TODO: make this dirty hack unnecessary
   let img = req.params.image.replace(/__/g, '/')
-  console.log('Running', img)
+  let cmd = req.params.command.split(' ')
 
-  let cmd = []
+  console.log('Running', cmd, 'in', img)
 
   spawn('docker', [
     'service', 'create',
