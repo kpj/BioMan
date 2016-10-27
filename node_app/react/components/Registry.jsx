@@ -3,7 +3,9 @@ import React from 'react'
 class Image extends React.Component {
   render () {
     return (
-      <li onClick={this.onClick.bind(this)}>{this.props.name}</li>
+      <li onClick={this.onClick.bind(this)}>
+        <button>{this.props.name}</button>
+      </li>
     )
   }
 
