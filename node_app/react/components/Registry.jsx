@@ -47,8 +47,8 @@ class Registry extends React.Component {
       <div>
         <h2>Image Registry</h2>
         <ul>
-          {this.state.images.map(img => {
-            return <Image name={img}/>
+          {this.state.images.map((img, idx) => {
+            return <Image key={idx} name={img}/>
           })}
         </ul>
       </div>

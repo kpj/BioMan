@@ -15,8 +15,8 @@ class ServiceList extends React.Component {
     return (
       <div>
         <h2>Service Overview</h2>
-        <pre>{this.state.value.split('\\n').map(i => {
-          return <span>{i}<br/></span>
+        <pre>{this.state.value.split('\\n').map((service, idx) => {
+          return <span key={idx}>{service}<br/></span>
         })}</pre>
       </div>
     )
