@@ -1,6 +1,6 @@
 import React from 'react'
 
-class NodeList extends React.Component {
+class ServiceList extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -8,13 +8,13 @@ class NodeList extends React.Component {
     }
 
     this.updateNodes()
-    setInterval(this.updateNodes.bind(this), 5000)
+    setInterval(this.updateNodes.bind(this), 2000)
   }
 
   render () {
     return (
       <div>
-        <h2>Node Overview</h2>
+        <h2>Service Overview</h2>
         <pre>{this.state.value.split('\\n').map(i => {
           return <span>{i}<br/></span>
         })}</pre>
@@ -23,7 +23,7 @@ class NodeList extends React.Component {
   }
 
   updateNodes () {
-    fetch('/api/nodes', {method: 'GET'})
+    fetch('/api/services', {method: 'GET'})
     .then(res => {
       return res.json()
     })
@@ -35,4 +35,4 @@ class NodeList extends React.Component {
   }
 }
 
-export default NodeList
+export default ServiceList

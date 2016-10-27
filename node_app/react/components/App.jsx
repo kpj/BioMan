@@ -1,5 +1,5 @@
 import React from 'react'
-import NodeList from './NodeList.jsx'
+import ServiceList from './ServiceList.jsx'
 import Registry from './Registry.jsx'
 
 class App extends React.Component {
@@ -7,7 +7,7 @@ class App extends React.Component {
     return (
       <div className='container'>
         <h1>BiotoolsManager</h1>
-        <NodeList/><br/>
+        <ServiceList/><br/>
         <Registry/>
       </div>
     )
