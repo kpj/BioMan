@@ -2,36 +2,44 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const spawn = require('spawn-promise')
 
+const registry_url = 'localhost:5000/'
+
 let api = express.Router()
 api.use(bodyParser.json())
 api.use(bodyParser.urlencoded({extended: true}))
 
 api.get('/services', (req, res) => {
-  spawn('docker', ['service', 'ls'])
+  spawn('docker', ['ps'])
   .then(buffer => res.json({data: buffer.toString()}))
   .catch(reason => console.log(reason))
 })
 
 api.get('/registry', (req, res) => {
-  spawn('curl', ['-s', 'http://localhost:5000/v2/_catalog'])
+  spawn('curl', ['-s', `${registry_url}v2/_catalog`])
   .then(buffer => res.json({data: JSON.parse(buffer.toString())}))
 })
 
+api.get('/logs/:id', (req, res) => {
+  let id = req.params.id
+  spawn('docker', ['logs', id])
+  .then(buffer => res.json({data: buffer.toString()}))
+  .catch(reason => console.log(reason))
+})
+
 api.post('/run/:image/:command', (req, res) => {
+  console.log(req.body)
   // TODO: make this dirty hack unnecessary
   let img = req.params.image.replace(/__/g, '/')
-  let cmd = req.params.command.split(' ')
+  let cmd = req.params.command
+
+  img='alpine'
 
   console.log('Running', cmd, 'in', img)
 
   spawn('docker', [
-    'service', 'create',
-    '--replicas', 1,
-    '--network', 'swarm_network',
-    '--restart-condition', 'none',
-    '--with-registry-auth',
-    img, ...cmd])
-  .then(buffer => res.json('service submitted'))
+    'run', '-d',
+    img, 'sh', '-c', cmd])
+  .then(buffer => res.json({data: buffer.toString()}))
   .catch(reason => console.log(reason))
 })
 
