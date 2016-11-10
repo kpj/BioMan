@@ -1,7 +1,7 @@
 import React from 'react'
 
 class ServiceList extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       value: 'not loaded'

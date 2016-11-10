@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 class Image extends React.Component {
-  constructor() {
+  constructor () {
     super()
     this.state = {
       command: 'echo hay; sleep 10'
