@@ -27,14 +27,12 @@ api.get('/logs/:id', (req, res) => {
 })
 
 api.post('/run/:image/:command', (req, res) => {
-  console.log(req.body)
-  // TODO: make this dirty hack unnecessary
-  let img = req.params.image.replace(/__/g, '/')
-  let cmd = req.params.command
+  let img = decodeURIComponent(req.params.image)
+  let cmd = decodeURIComponent(req.params.command)
 
   img = 'alpine'
 
-  console.log('Running', cmd, 'in', img)
+  console.log('Running', `"${cmd}"`, 'in', img)
 
   spawn('docker', [
     'run', '-d',

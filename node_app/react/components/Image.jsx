@@ -5,7 +5,7 @@ class Image extends React.Component {
   constructor () {
     super()
     this.state = {
-      command: 'echo hay; sleep 10'
+      command: 'echo hay > /output/data.dat; echo "printed"; sleep 10'
     }
   }
 
@@ -30,9 +30,9 @@ class Image extends React.Component {
   }
 
   onButtonClick () {
-    let url = '/api/run/' + this.props.name.replace(/\//g, '__') + '/' + this.state.command
+    let url = '/api/run/' + encodeURIComponent(this.props.name) + '/' + encodeURIComponent(this.state.command)
 
-    fetch(url, {method: 'POST', body: 'command=hui'})
+    fetch(url, {method: 'POST'})
     .then(res => res.json())
     .then(json => {
       this.props.addContainer(json.data)
