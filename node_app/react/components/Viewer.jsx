@@ -5,9 +5,14 @@ class View extends React.Component {
   constructor () {
     super()
     this.state = {
-      output: 'empty'
+      output: 'empty',
+      files: []
     }
-    setInterval(this.updateId.bind(this), 2000)
+  }
+
+  componentDidMount () {
+    this.update()
+    setInterval(this.update.bind(this), 2000)
   }
 
   render () {
@@ -15,17 +20,32 @@ class View extends React.Component {
       <div>
         <h3>{this.props.cid}</h3>
         <pre>{this.state.output}</pre>
+        <ul>
+          {this.state.files.map((file, idx) => {
+            return (
+              <li key={idx}>
+                <form method="GET" action={`/api/files/${this.props.cid}/${file}`}>
+                  <button type="SUBMIT">{file}</button>
+                </form>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     )
   }
 
-  updateId () {
-    let url = '/api/logs/'
-
-    fetch(`${url}${this.props.cid}`, {method: 'GET'})
+  update () {
+    fetch(`/api/logs/${this.props.cid}`, {method: 'GET'})
     .then(res => res.json())
     .then(json => {
       this.setState({output: json.data})
+    })
+
+    fetch(`/api/files/${this.props.cid}`, {method: 'GET'})
+    .then(res => res.json())
+    .then(json => {
+      this.setState({files: json.data})
     })
   }
 }

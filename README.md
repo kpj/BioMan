@@ -65,7 +65,7 @@ and then run it using
 ```bash
 $ eval $(docker-machine env --swarm swarm-master)
 $ docker run \
-  -e "TOKEN=$token"
+  -e "VOLUME=/swarm_volumes" \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -p 3000:3000 \
   kpj/bioman/manager
