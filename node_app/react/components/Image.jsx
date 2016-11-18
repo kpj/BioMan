@@ -5,7 +5,7 @@ class Image extends React.Component {
   constructor () {
     super()
     this.state = {
-      command: 'echo hay > /output/data.dat; echo "printed"; sleep 10'
+      command: 'for i in "/input/"* ; do echo "> $i" ; cp -v "$i" "/output/processed_$(basename $i)" ; sleep 1 ; done'
     }
   }
 
@@ -13,7 +13,12 @@ class Image extends React.Component {
     return (
       <li>
         <button onClick={this.onButtonClick.bind(this)}>{this.props.name}</button>
-        <input type="text" value={this.state.command} onChange={this.updateInputValue.bind(this)}/>
+        <input type="text" size="100" value={this.state.command} onChange={this.updateInputValue.bind(this)}/>
+        <br/>
+        <form action={`/api/files/upload`} method="POST" encType="multipart/form-data">
+          <input type="file" name="sampleFile" />
+          <input type="submit" value="Upload!" />
+        </form>
       </li>
     )
   }
